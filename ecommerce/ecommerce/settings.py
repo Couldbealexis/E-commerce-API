@@ -53,7 +53,6 @@ MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    # 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -85,10 +84,10 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 DATABASES = {
     # Default database - sqlite
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
     #     'NAME': 'nvvsxvrrjyqsux',
@@ -97,21 +96,19 @@ DATABASES = {
     #     'HOST': 'ec2-174-129-236-147.compute-1.amazonaws.com',
     #     'PORT': '5432',
     # }
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ecommerce',
-        'USER': 'postgres',
-        'PASSWORD': 'Boz0407',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
-        'client_encoding': 'UTF8',
-        'default_transaction_isolation': 'read committed',
-        'timezone': 'UTC'
-    },
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'ecommerce',
+    #     'USER': 'postgres',
+    #     'PASSWORD': 'Boz0407',
+    #     'HOST': '127.0.0.1',
+    #     'PORT': '5432',
+    #     'client_encoding': 'UTF8',
+    #     'default_transaction_isolation': 'read committed',
+    #     'timezone': 'UTC'
+    # },
 }
 
-db_from_env = dj_database_url.config(conn_max_age=500)
-DATABASES['default'].update(db_from_env)
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
