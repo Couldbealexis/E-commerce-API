@@ -90,17 +90,16 @@ DATABASES = {
     # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'ecommerce',
-        'USER': 'name',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '',
+        'NAME': 'nvvsxvrrjyqsux',
+        'USER': 'd3oep1jhaprnn',
+        'PASSWORD': '08d1eb6729174f10ef8a9ce224e6cd6c4198b259c0410d04bffd9d56c87b5a46',
+        'HOST': 'ec2-174-129-236-147.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
-
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
