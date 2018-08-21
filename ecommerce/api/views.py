@@ -19,8 +19,10 @@ def index(request):
 @csrf_exempt
 def product_list(request):
     if request.method == 'GET':
-        products = Product.objects.all()
-        serializer = ProductSerializer(products, many=True)
+        products = Product.objects.order_by('name').all()
+        # serializer = ProductSerializer(products, many=True)
+        # return JsonResponse(serializer.data, safe=False)
+        serializer = PaginatedProductSerializer(products,request,5)
         return JsonResponse(serializer.data, safe=False)
 
     elif request.method == 'POST':
