@@ -19,32 +19,49 @@ def index(request):
 @csrf_exempt
 def product_list(request):
     if request.method == 'GET':
-        products = Product.objects.order_by('name').all()
+        sort = request.GET.get('sort', 'name')
+        size = request.GET.get('size', '5')
+        # Asc by default, for desc add "-" before the parameter
+        # ?page=1&sort=-likes
+        # For size
+        # ?page=1&sort=-likes&size=3
+        # For search:
+        # ?search=Nintendo
+        term = request.GET.get('search')
+        if term:
+            products = Product.objects.order_by(sort).filter(name__icontains=term)
+        else:
+            products = Product.objects.order_by(sort).all()
         # serializer = ProductSerializer(products, many=True)
         # return JsonResponse(serializer.data, safe=False)
-        serializer = PaginatedProductSerializer(products,request,5)
+        serializer = PaginatedProductSerializer(products,request,size)
         return JsonResponse(serializer.data, safe=False)
 
     elif request.method == 'POST':
         try:
-            name = request.POST.get('name')
-            npc = request.POST.get('npc')
-            print(npc)
-            description = request.POST.get('description')
-            stock = request.POST.get('stock')
-            price = request.POST.get('price')
-            likes = request.POST.get('likes')
-            last_update = request.POST.get('last_update')
-            price = decimal.Decimal(price)
+            user_id = request.POST.get('user')
+            user = User_e.objects.get(pk=user_id)
+            if user.type == UserType.objects.get(pk=1):
 
-            product = Product.objects.create(name=name, npc=npc, description=description, stock=stock,
-                                             price=price, likes=likes, last_update=last_update)
-            product.save()
-            data = {"id":product.pk, "name":product.name, "npc":product.npc, "description":product.description,
-                    "stock":product.stock, "price":str(product.price), "likes":product.likes,
-                    "last_update":str(product.last_update)}
-            data = json.dumps(data)
-            return HttpResponse(data, status=201)
+                name = request.POST.get('name')
+                npc = request.POST.get('npc')
+                description = request.POST.get('description')
+                stock = request.POST.get('stock')
+                price = request.POST.get('price')
+                likes = request.POST.get('likes')
+                last_update = request.POST.get('last_update')
+                price = decimal.Decimal(price)
+
+                product = Product.objects.create(name=name, npc=npc, description=description, stock=stock,
+                                                 price=price, likes=likes, last_update=last_update)
+                product.save()
+                data = {"id":product.pk, "name":product.name, "npc":product.npc, "description":product.description,
+                        "stock":product.stock, "price":str(product.price), "likes":product.likes,
+                        "last_update":str(product.last_update)}
+                data = json.dumps(data)
+                return HttpResponse(data, status=201)
+
+            return HttpResponse(status=403)
 
         except Exception as e:
             print('# Error #')
@@ -100,8 +117,6 @@ def user_list(request):
 @api_view(['POST'])
 def buy_products(request):
     if request.method == 'POST':
-        # print(request.data)
-        # print("------")
         customer_id = request.data['customer']
         try:
             customer = User_e.objects.get(pk=customer_id)
