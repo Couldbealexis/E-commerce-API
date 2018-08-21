@@ -26,7 +26,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 SECRET_KEY = 'mjb88e-rvpwe-q5toom=!!--uv=@yg%6bd9=b@ckqyck7z-)@q'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', '.herokuapp.com']
 
@@ -55,7 +55,6 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -86,13 +85,17 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'nvvsxvrrjyqsux',
-        'USER': 'd3oep1jhaprnn',
-        'PASSWORD': '08d1eb6729174f10ef8a9ce224e6cd6c4198b259c0410d04bffd9d56c87b5a46',
-        'HOST': 'ec2-174-129-236-147.compute-1.amazonaws.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'nvvsxvrrjyqsux',
+    #     'USER': 'd3oep1jhaprnn',
+    #     'PASSWORD': '08d1eb6729174f10ef8a9ce224e6cd6c4198b259c0410d04bffd9d56c87b5a46',
+    #     'HOST': 'ec2-174-129-236-147.compute-1.amazonaws.com',
+    #     'PORT': '5432',
+    # }
 }
 
 db_from_env = dj_database_url.config(conn_max_age=500)
@@ -133,9 +136,10 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
-STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
+# STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static'),
-)
+# STATICFILES_DIRS = (
+#     os.path.join(PROJECT_ROOT, 'static'),
+# )
+STATIC_URL = '/static/'
