@@ -12,6 +12,6 @@ Note: Is recommended to create a Virtual Enviroment in order to test this API.
 
 3.- pip install -r requirements.txt 
 
-4.- python manage.py run server
+4.- python manage.py runserver
 
 5.- Test API
